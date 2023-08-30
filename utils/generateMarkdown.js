@@ -1,11 +1,11 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-  if (data.license === agpl){
+  if (license === 'agpl'){
     return `[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)`;
-  }else if (data.license === apache){
+  }else if (license === 'apache'){
     return `[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`;
-  }else if (data.license === mit){
+  }else if (license === 'mit'){
     return `[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`;
   }else{
     return ``;
@@ -15,13 +15,9 @@ function renderLicenseBadge(license) {
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
-  if (data.license === agpl){
-    return '[GNU AGPLv3 License](https://www.gnu.org/licenses/agpl-3.0.en.html)';
-  }else if (data.license === apache){
-    return '[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)';
-  }else if (data.license === mit){
-    return '[MIT License](https://opensource.org/licenses/MIT)';
-  }else{
+  if (license !== 'no license'){
+    return `- [License](#license)`
+  }else {
     return ``;
   }
 }
@@ -29,8 +25,8 @@ function renderLicenseLink(license) {
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
-  if (license !== 'No License') {
-    return `This project is licensed under the ${license === 'mit' ? 'an' : 'a'} ${license.toUpperCase()} License.`;
+  if (license !== 'no license') {
+    return `## License\nThis project is licensed under the ${license === 'mit' ? 'an' : 'a'} ${license.toUpperCase()} License.`;
   }else {
     return ``;
   }
@@ -45,13 +41,20 @@ function generateMarkdown(answers) {
   return `
   # ${answers.title}
 
+  ${licenseBadge}
+
   ## Description
 
   ${answers.description}
 
   ## Table of Contents
 
-  ${answers.tableOfContents}
+  - [Installation](#installation)
+  - [Usage](#usage)
+  ${licenseLink}
+  - [Contributing](#contributing)
+  - [Test](#test)
+  - [Question](#questions)
 
   ## Installation
 
@@ -61,11 +64,7 @@ function generateMarkdown(answers) {
 
   ${answers.usage}
 
-  ## License
-
-  ${answers.licenseBadge}
-  ${answers.licenseLink}
-  ${answers.licenseSection}
+  ${licenseSection}
 
   ## Contributing
 
@@ -74,6 +73,12 @@ function generateMarkdown(answers) {
   ## Test
 
   ${answers.test}
+
+  ## Questions
+
+  If you have any questions, please email me at: ${answers.email}
+
+  If you would like to see more of my work, my GitHub link is [${answers.github}](https://github.com/${answers.github})
 `;
 }
 
